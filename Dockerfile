@@ -15,14 +15,15 @@ RUN apt-get update && \
         libssl-dev \
         libc-client2007e-dev \
         libkrb5-dev \
-        libmcrypt-dev
-
-RUN docker-php-ext-install pdo_mysql
+        libmcrypt-dev \
+        zip \
+        unzip
 
 RUN docker-php-ext-configure imap --with-imap-ssl --with-kerberos \
-        && docker-php-ext-install imap
-
-RUN pecl install mcrypt-1.0.1
+        && docker-php-ext-install imap \
+        && docker-php-ext-install pdo_mysql \
+        && docker-php-ext-install zip \
+        && pecl install mcrypt-1.0.1
 
 RUN echo "extension=mcrypt.so" > /usr/local/etc/php/conf.d/mcrypt.ini
 
